@@ -7,21 +7,20 @@ import { Todos } from "./components/Todos";
 function App() {
   const [todos, setTodos] = useState([]);
 
-  useEffect(
-    function () {
+  useEffect(function () {
+    setInterval(function () {
       fetch("http://localhost:3000/todos").then(async function (res) {
         const json = await res.json();
         setTodos(json.todos);
       });
-    },
-    [todos]
-  );
+    }, 10000);
+  }, []);
 
   return (
     <div>
       <h1>Todo APP</h1>
       <CreateTodo setTodos={setTodos}></CreateTodo>
-      <Todos todos={todos} setTodos={setTodos}></Todos>
+      <Todos key={todos.id} todos={todos} setTodos={setTodos}></Todos>
     </div>
   );
 }
